@@ -15,8 +15,8 @@ It is aim to make a common front-end project boilerplate. Everyone could just fe
 &nbsp;&nbsp;--config  
   
 ## Usage
-Unfortunately, currently only setup the development env. Without production processes.
-I'll add production features as soon as possible.
+Unfortunately, currently only setup the development env. Without production processes.   
+I'll add production features as soon as possible. 
 
 ```sh
 npm run dev
