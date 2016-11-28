@@ -93,8 +93,7 @@ if(isOnline){
               var cssReg = new RegExp("(<link[^>/]*href=)(['\"])"+entryPath+"(\\.css\\2)");
               const jsVersion = entry=="common" ? getVersion(staticPagePath+"/"+entryJs, "md5") : getVersion(config.path.page+"/"+entryJs);
               var cssVersion = null;
-              var cssPath = `${config.path.page}/${entry}.scss`;
-              console.log(cssPath);
+              var cssPath = `${config.path.page}/${entry}.${config.complier.css}`;
               if(fs.existsSync(cssPath)){
                 cssVersion = getVersion(cssPath);
               }
