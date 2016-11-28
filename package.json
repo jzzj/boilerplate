@@ -9,9 +9,10 @@
   },
   "scripts": {
     "test": "npm run prod && (python -m SimpleHTTPServer 8666 &) && python -mwebbrowser http://localhost:8666/static/template/index.html",
-    "build": "rm -rf static/ && NODE_ENV=development webpack",
-    "dev": "rm -rf static/ && NODE_ENV=development node devserver.js",
-    "prod": "rm -rf static/ && NODE_ENV=production webpack"
+    "build": "npm run clean && NODE_ENV=development webpack",
+    "dev": "npm run clean && NODE_ENV=development node devserver.js",
+    "prod": "npm run clean && NODE_ENV=production webpack",
+    "clean": "echo \"We're assuming you're using static/ folder to store all builded files, otherwise, you may need to change this command!\" && rm -rf static/"
   },
   "author": "",
   "license": "ISC",
