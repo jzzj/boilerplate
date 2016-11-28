@@ -13,7 +13,33 @@ It is aim to make a common front-end project boilerplate. Everyone could just fe
 &nbsp;&nbsp;--static => builded static files.  
 &nbsp;&nbsp;--lib   
 &nbsp;&nbsp;--config  
-  
+   
+## Usage
+```sh
+git clone https://github.com/jzzj/boilerplate.git
+```
+fetch/fork the boilerplate to your own repository.
+Change the project name to your awesome name, and then:
+```sh
+npm install
+```
+Finally you can develop your own project, that's not too long, right?!(Tell me if your feel that's not as simple as you thought.)
+
+```sh
+npm run dev
+```
+start a development server.
+
+```sh
+npm run build
+```
+build static files in development env.
+
+```sh
+npm run prod
+```
+build static files in production env.
+
 ## Test
 ```sh
 npm run test
@@ -32,27 +58,4 @@ index.html	        200	document	Other	584 B	2 ms
 index.aef6601.css	200	stylesheet	index.html:5	222 B	3 ms	
 common.de04cfeb.js	200	script	index.html:9	91.8 KB	4 ms	
 index.c0bc339.js	200	script	index.html:10	140 KB	5 ms	
-
 ```
-  
-## Usage
-```sh
-npm install simple-boilerplate
-```
-fetch the boilerplate to local.
-You could just start with change the project name, then you can develop your own project.
-
-```sh
-npm run dev
-```
-start a development server.
-
-```sh
-npm run build
-```
-build static files in development env.
-
-```sh
-npm run prod
-```
-build static files in production env.
