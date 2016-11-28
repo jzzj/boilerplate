@@ -7,7 +7,6 @@ import './index.scss'
 
 typeof document !== 'undefined' && render(<List />, document.getElementById('app'));
 
-
 const cats = ["a", "b", "c"];
 $('<h1>Cats</h1>').appendTo('body');
 const ul = $('<ul></ul>').appendTo('body');
