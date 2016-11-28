@@ -37,10 +37,14 @@ index.c0bc339.js	200	script	index.html:10	140 KB	5 ms
   
 ## Usage
 ```sh
-npm install simple-boilerplate
+git clone https://github.com/jzzj/boilerplate.git
 ```
-fetch the boilerplate to local.
-You could just start with change the project name, then you can develop your own project.
+fetch/fork the boilerplate to your own repository.
+Change the project name to your awesome name, and then:
+```sh
+npm install
+```
+Finally you can develop your own project, that's not too long, right?!
 
 ```sh
 npm run dev
