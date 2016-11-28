@@ -1,5 +1,7 @@
 var webpack = require("webpack");
 var config = require("config");
+var glob = require('glob');
+var templatePath = config.path.template || "template";
 
 var webpackConfig = require("./webpack.config.js");
 
@@ -13,10 +15,21 @@ var express = require('express');
 var webpackMiddleware = require("webpack-dev-middleware");
 
 var app = new express();
-
-app.get("/", function(req, res){
-	res.sendFile(__dirname+'/client/page/index.html');
-})
+(function routes(){
+	glob
+	    .sync(templatePath + "/**/*.html")
+	    .forEach(function (f) {
+	    	var route = f.replace(templatePath, "");
+	    	app.get(route, function(r, res){
+	    		res.sendFile(f);
+	    	});
+	    	if(/index\.html$/.test(f)){
+	    		app.get(route.replace("index.html", ""), function(r, res){
+	    			res.sendFile(f);
+	    		});
+	    	}
+	    });
+})();
 
 app.use(webpackMiddleware(compiler, {
     // publicPath is required, whereas all other options are optional

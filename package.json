@@ -1,6 +1,6 @@
 {
   "name": "boilerplate",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Boilerplate for front-end project only use webpack.",
   "main": "index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "git+https://github.com/jzzj/boilerplate.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run prod && (python -m SimpleHTTPServer 8666 &) && python -mwebbrowser http://localhost:8666/static/template/index.html",
     "build": "rm -rf static/ && NODE_ENV=development webpack",
     "dev": "rm -rf static/ && NODE_ENV=development node devserver.js",
     "prod": "rm -rf static/ && NODE_ENV=production webpack"
