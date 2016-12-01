@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 var config = require("config");
-var glob = require('glob');
-var templatePath = config.path.template || "template";
+var resDumpService = require('res-dump-service');
+var templatePath = config.path.template;
 
 var webpackConfig = require("./webpack.config.js");
 
@@ -15,21 +15,8 @@ var express = require('express');
 var webpackMiddleware = require("webpack-dev-middleware");
 
 var app = new express();
-(function routes(){
-	glob
-	    .sync(templatePath + "/**/*.html")
-	    .forEach(function (f) {
-	    	var route = f.replace(templatePath, "");
-	    	app.get(route, function(r, res){
-	    		res.sendFile(f);
-	    	});
-	    	if(/index\.html$/.test(f)){
-	    		app.get(route.replace("index.html", ""), function(r, res){
-	    			res.sendFile(f);
-	    		});
-	    	}
-	    });
-})();
+//init some routes.
+resDumpService(app, Object.assign({commonFileName: "common"}, webpackConfig));
 
 app.use(webpackMiddleware(compiler, {
     // publicPath is required, whereas all other options are optional
@@ -50,7 +37,7 @@ app.use(webpackMiddleware(compiler, {
     },
     // watch options (only lazy: false)
 
-    publicPath: config.path.publicPath || "static",
+    publicPath: config.path.publicPath,
     // public path to bind the middleware to
     // use the same as in webpack
 
@@ -77,4 +64,4 @@ app.use(require("webpack-hot-middleware")(compiler, {
 	heartbeat: 10 * 1000
 }));
 
-app.listen(3000);
+app.listen(config.port);

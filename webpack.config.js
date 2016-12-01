@@ -3,15 +3,12 @@ const webpack = require('webpack');
 const glob = require('glob');
 const config = require('config');
 const fs = require("fs");
-const getVersion = require("./lib/version").getVersion;
-const mkdirp = require("./lib/util").mkdirp;
 const alias = config.alias;
 const NODE_ENV = process.env.NODE_ENV;
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const execSync = require('child_process').execSync;
-const extractCSS = new ExtractTextPlugin("[name].css");
-const publicPath = config.path.publicPath || "static";
-const templatePath = config.path.template || "template";
+const ResDumpPlugin = require('res-dump-plugin');
+const publicPath = config.path.publicPath;
+const templatePath = config.path.template;
+const cdnPath = (config.cdn || "").replace(/\/$/, "");
 
 const commonsPlugin = new webpack.optimize.CommonsChunkPlugin({
   name: "common",
@@ -35,13 +32,12 @@ var plugins = [
   }),
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
-  new ExtractTextPlugin("[name].css"),
   commonsPlugin
 ];
 const isOnline = NODE_ENV ? NODE_ENV==='production' : config.isOnline;
 const entries = getEntries(config.path.page);
 if(isOnline){
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
+    /*plugins.push(new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
       },
@@ -50,77 +46,12 @@ if(isOnline){
       },
       sourceMap: false,
       test: /\.(js|jsx)$/
+    }));*/
+
+    // html/css/img resources reference hash etc.
+    plugins.push(new ResDumpPlugin({
+      commonFile: "common"
     }));
-
-    plugins.push(function() {
-      this.plugin("done", function(statsData) {
-        var stats = statsData.toJson();
-        //console.log(stats);
-        if (!stats.errors.length) {
-          var jsEntries = ["common"].concat(Object.keys(entries).map(function(entry){
-            return entry;
-          }));
-          var templateFiles = glob
-            .sync(templatePath + "/**/*.html")
-            .map(function (f) {
-              return f;
-            });
-          var staticPagePath = config.path.page.replace(config.path.client, config.path["static"]);
-          var replacements = getReplacements(stats);
-          renameHashFiles(replacements);
-          templateFiles.forEach(function(templateFile){
-            var html = fs.readFileSync(templateFile, "utf8");
-            jsEntries.forEach(function(entry){
-              var tmp = replacements[entry];
-              html = html.replace(tmp.jsReg, tmp.jsReplacement);
-              if(tmp.cssReplacement){
-                html = html.replace(tmp.cssReg, tmp.cssReplacement);
-              }
-            });
-            
-            var templateOutputPath = templateFile.replace(config.path.client, config.path["static"]);
-            mkdirp(templateOutputPath.replace(/(.+\/).+$/, "$1"));
-            fs.writeFileSync(templateOutputPath, html);
-          });
-
-          function getReplacements(stats){
-            var cache = {};
-            jsEntries.forEach(function(entry){
-              var entryPath = publicPath+"/"+entry;
-              var ret = stats.assetsByChunkName[entry];
-              var entryJs = Array.isArray(ret) ? ret[0] : ret;
-              var jsReg = new RegExp("(<script[^><]*src=)(['\"])"+entryPath+"(\\.js\\2)");
-              var cssReg = new RegExp("(<link[^>/]*href=)(['\"])"+entryPath+"(\\.css\\2)");
-              const jsVersion = entry=="common" ? getVersion(staticPagePath+"/"+entryJs, "md5") : getVersion(config.path.page+"/"+entryJs);
-              var cssVersion = null;
-              var cssPath = `${config.path.page}/${entry}.${config.complier.css}`;
-              if(fs.existsSync(cssPath)){
-                cssVersion = getVersion(cssPath);
-              }
-              cache[entry] = {
-                jsReg: jsReg,
-                cssReg: cssReg,
-                jsReplacement: `$1$2${entryPath}.${jsVersion}$3`,
-                cssReplacement: `$1$2${entryPath}.${cssVersion}$3`,
-                jsVersion: jsVersion,
-                cssVersion: cssVersion
-              };
-            });
-            return cache;
-          }
-
-          function renameHashFiles(replacements){
-            Object.keys(replacements).forEach(entry=>{
-              var replacement = replacements[entry];
-              fs.renameSync(path.join("./", publicPath, entry+".js"), path.join("./", publicPath, entry+"."+replacement.jsVersion+".js"));
-              if(replacement.cssVersion){
-                fs.renameSync(path.join("./", publicPath, entry+".css"), path.join("./", publicPath, entry+"."+replacement.cssVersion+".css"));
-              }
-            });
-          }
-        }
-      });
-    });
 }
 
 function getEntries(dir){
@@ -163,15 +94,8 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
-      },
-      {
-        test:   /\.s?css$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules!postcss')
       }
     ]
-  },
-  postcss: function () {
-    return [require('autoprefixer'), require('precss')];
   },
   plugins: plugins,
   resolve: {

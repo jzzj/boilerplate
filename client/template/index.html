@@ -2,11 +2,20 @@
  <html>
      <head>
          <meta charset="utf-8">
-         <link href="/static/page/index/index.css" rel="stylesheet" type="text/css"/>
+         <link href="${require('./client/page/index/index.css')}" rel="stylesheet" type="text/css"/>
      </head>
      <body>
+        <header>
+            <img src="${require('@client/img/cat.jpg')}"/>
+            <!-- 
+            this is what will be converted:
+            <img src="require('/static/img/cat.jpg')"/>
+            dev server will server static resources.
+            Provide another res-dump plugin to server all res hash stuff.
+            -->
+        </header>
      	<div id="app"></div>
-     	<script src="/static/page/common.js" charset="utf-8"></script>
-        <script src="/static/page/index/index.js" charset="utf-8"></script>
+     	<script src="${require('@client/page/common.js')}" charset="utf-8"></script>
+        <script src="${require('@client/page/index/index.js')}" charset="utf-8"></script>
      </body>
  </html>

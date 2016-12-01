@@ -1,7 +1,9 @@
+@import './client/styles/common.scss';
 body {
 	display: block;
-
 	div {
-		color: red
+		color: red;
+		background-image: url(${require('@client/img/cat.jpg')});
+		background-repeat: no-repeat;
 	}
 }
