@@ -13,6 +13,32 @@ It is aim to make a common front-end project boilerplate. Everyone could just fe
 &nbsp;&nbsp;--static => builded static files.  
 &nbsp;&nbsp;--lib   
 &nbsp;&nbsp;--config  
+
+## Update
+This time i had make html great again!  
+Because i'm really don't like import everything in js. (like css/html etc..)  
+So, what did is:
+html file is still the entry file, and you used to refer to a js will look like this:
+```html
+<script src="/some/page/index.js"></script>
+```
+Now, you refer js/css just use require, even in the css file:
+```css
+body{
+  background-image: url(${require('@alias/path/to/your/image.jpg')})
+}
+```
+```html
+<head>
+   <link href="${require('./client/page/index/index.css')}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+   <img src="${require('@client/img/cat.jpg')}"/>
+   <script src="${require('/some/awesome/index.js')}"></script>
+</body>
+```
+You can require assets not just in js file now!  
+Just enjoy!
    
 ## Usage
 ```sh
