@@ -16,7 +16,10 @@ var webpackMiddleware = require("webpack-dev-middleware");
 
 var app = new express();
 //init some routes.
-resDumpService(app, Object.assign({commonFileName: "common"}, webpackConfig));
+resDumpService(app, {
+    webpackConfig: webpackConfig,
+    commonFileName: "common"
+});
 
 app.use(webpackMiddleware(compiler, {
     // publicPath is required, whereas all other options are optional
@@ -65,3 +68,4 @@ app.use(require("webpack-hot-middleware")(compiler, {
 }));
 
 app.listen(config.port);
+console.log("=========== Server is listening on "+config.port+" ==========");

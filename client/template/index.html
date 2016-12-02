@@ -2,11 +2,12 @@
  <html>
      <head>
          <meta charset="utf-8">
+         <link href="${require('@client/styles/common.css')}" rel="stylesheet" type="text/css"/>
          <link href="${require('./client/page/index/index.css')}" rel="stylesheet" type="text/css"/>
      </head>
      <body>
         <header>
-            <img src="${require('@client/img/cat.jpg')}"/>
+            <img src="${require('@client/img/cat1.jpg')}"/>
             <!-- 
             this is what will be converted:
             <img src="require('/static/img/cat.jpg')"/>
@@ -15,6 +16,11 @@
             -->
         </header>
      	<div id="app"></div>
+        <!-- 
+            To third-party libaries, you have to link it's builded resource, I'm really sorry for that.
+            If your truly want to link resource as others, please issue: https://github.com/jzzj/boilerplate/issues!
+        -->
+        <script src="${require('@client/vendor/core.lib.js')}" charset="utf-8"></script>
      	<script src="${require('@client/page/common.js')}" charset="utf-8"></script>
         <script src="${require('@client/page/index/index.js')}" charset="utf-8"></script>
      </body>

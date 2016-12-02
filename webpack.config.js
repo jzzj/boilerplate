@@ -32,13 +32,19 @@ var plugins = [
   }),
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
+  new webpack.DllReferencePlugin({
+    context: __dirname,
+    //                                                  core is relative to vendor.webpack.js entry field, check it yourself
+    manifest: require(path.join(__dirname, 'manifest', 'core-'+NODE_ENV+'-manifest.json')),
+  }),
   commonsPlugin
 ];
 const isOnline = NODE_ENV ? NODE_ENV==='production' : config.isOnline;
 const entries = getEntries(config.path.page);
 if(isOnline){
-    /*plugins.push(new webpack.optimize.UglifyJsPlugin({
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
       compress: {
+        screw_ie8: true,
         warnings: false,
       },
       output: {
@@ -46,8 +52,8 @@ if(isOnline){
       },
       sourceMap: false,
       test: /\.(js|jsx)$/
-    }));*/
-
+    }));
+    plugins.push(new webpack.optimize.DedupePlugin());
     // html/css/img resources reference hash etc.
     plugins.push(new ResDumpPlugin({
       commonFile: "common"
