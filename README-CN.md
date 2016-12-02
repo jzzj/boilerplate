@@ -9,7 +9,7 @@
 &nbsp;&nbsp;--client  
 &nbsp;&nbsp;&nbsp;&nbsp;--page      => 入口文件  
 &nbsp;&nbsp;&nbsp;&nbsp;--component    
-&nbsp;&nbsp;&nbsp;&nbsp;--vendor => 第三方库
+&nbsp;&nbsp;&nbsp;&nbsp;--vendor => 第三方库  
 &nbsp;&nbsp;&nbsp;&nbsp;--...   
 &nbsp;&nbsp;--static => 静态资源目录，建议使用static，其它目录也完全可以，不过需要手动修改config下面的配置文件  
 &nbsp;&nbsp;--lib   
@@ -41,6 +41,7 @@ development环境下进行静态资源文件的构建
 npm run prod
 ```
 production环境下进行静态资源文件的构建
+
 ```sh
 npm run dev:lib
 ```
