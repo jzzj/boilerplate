@@ -6,7 +6,7 @@ var templatePath = config.path.template;
 var webpackConfig = require("./webpack.config.js");
 
 Object.keys(webpackConfig.entry).forEach(function (key) {
-    webpackConfig.entry[key] = [].concat(webpackConfig.entry[key]).concat('webpack-hot-middleware/client');
+    webpackConfig.entry[key] = [].concat(webpackConfig.entry[key]).concat(['res-dump-service/client', 'webpack-hot-middleware/client']);
 });
 
 var compiler = webpack(webpackConfig);
@@ -15,11 +15,6 @@ var express = require('express');
 var webpackMiddleware = require("webpack-dev-middleware");
 
 var app = new express();
-//init some routes.
-resDumpService(app, {
-    webpackConfig: webpackConfig,
-    commonFileName: "common"
-});
 
 app.use(webpackMiddleware(compiler, {
     // publicPath is required, whereas all other options are optional
@@ -61,11 +56,20 @@ app.use(webpackMiddleware(compiler, {
     serverSideRender: false,
     // Turn off the server-side rendering mode. See Server-Side Rendering part for more info.
 }));
-app.use(require("webpack-hot-middleware")(compiler, {
-	log: console.log, 
-	path: '/__webpack_hmr', 
-	heartbeat: 10 * 1000
+
+var middleware = require("webpack-hot-middleware")(compiler, {
+    log: console.log, 
+    path: '/__webpack_hmr', 
+    heartbeat: 10 * 1000
+});
+
+
+//init some routes.
+app.use(resDumpService({
+    webpackConfig: webpackConfig,
+    commonFileName: "common"
 }));
+app.use(middleware);
 
 app.listen(config.port);
 console.log("=========== Server is listening on "+config.port+" ==========");

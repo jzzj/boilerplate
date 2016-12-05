@@ -16,8 +16,5 @@ module.exports = {
 		"@lib": path.join(__dirname, "/../lib")
 	},
 	// options: git, md5. recommand git, faster. Git will use your git commit hash. Md5 will calculate your file's md5 value.
-	versionMode: "git", 
-	complier: {
-		css: "scss"
-	}
+	versionMode: "git"
 }

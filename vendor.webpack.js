@@ -2,7 +2,6 @@ const path = require('path');
 const config = require('config');
 const webpack = require('webpack');
 const NODE_ENV = process.env.NODE_ENV;
-const chokidar = require('chokidar');
 
 var webpackConfig = {
   entry: {

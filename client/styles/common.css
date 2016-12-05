@@ -1,4 +1,5 @@
-@import './client/styles/font.css';
+@import './font.css';
+
 li{
 	list-style: none;
 }
