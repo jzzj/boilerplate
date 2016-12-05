@@ -9,37 +9,14 @@ It is aim to make a common front-end project boilerplate. Everyone could just fe
 &nbsp;&nbsp;--client  
 &nbsp;&nbsp;&nbsp;&nbsp;--page      => the entry points go here  
 &nbsp;&nbsp;&nbsp;&nbsp;--component    
+&nbsp;&nbsp;&nbsp;&nbsp;--vendor => third-party library stuff goes here
 &nbsp;&nbsp;&nbsp;&nbsp;--...   
 &nbsp;&nbsp;--static => builded static files.  
 &nbsp;&nbsp;--lib   
 &nbsp;&nbsp;--config  
 
-## Update
-This time i had make html great again!  
-Because i'm really don't like import everything in js. (like css/html etc..)  
-So, what did is:
-html file is still the entry file, and you used to refer to a js will look like this:
-```html
-<script src="/some/page/index.js"></script>
-```
-Now, you refer js/css just use require, even in the css file:
-```css
-body{
-  background-image: url(${require('@alias/path/to/your/image.jpg')})
-}
-```
-```html
-<head>
-   <link href="${require('./client/page/index/index.css')}" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-   <img src="${require('@client/img/cat.jpg')}"/>
-   <script src="${require('/some/awesome/index.js')}"></script>
-</body>
-```
-You can require assets not just in js file now!  
-Just enjoy!
-   
+## [中文文档](https://github.com/jzzj/boilerplate/blob/master/README-CN.md)
+
 ## Usage
 ```sh
 git clone https://github.com/jzzj/boilerplate.git
@@ -65,6 +42,45 @@ build static files in development env.
 npm run prod
 ```
 build static files in production env.
+
+```sh
+npm run dev:lib
+```
+build third-party library files in development env.
+
+```sh
+npm run prod:lib
+```
+build third-party library files in production env.  
+
+Actually, when your run ```sh npm run dev/prod```, it will run ```sh npm run dev/prod:lib``` automatically. You really run those two commands above rarely. And, by the way, if your change the vendor file, it won't automatically applied. Yes, it is a bug/feature, i will support it in next generation!
+
+## Resource-dump-service/plugin
+https://github.com/jzzj/res-dump-plugin
+This time i had make html great again!  
+Because i'm really don't like import everything in js. (like css/html etc..)  
+So, what did is:
+html file is still the entry file, and you used to refer to a js will look like this:
+```html
+<script src="/some/page/index.js"></script>
+```
+Now, you refer js/css just use require, even in the css file:
+```css
+body{
+  background-image: url(${require('@alias/path/to/your/image.jpg')})
+}
+```
+```html
+<head>
+   <link href="${require('./client/page/index/index.css')}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+   <img src="${require('@client/img/cat.jpg')}"/>
+   <script src="${require('/some/awesome/index.js')}"></script>
+</body>
+```
+You can require assets not just in js file now!  
+Just enjoy!
 
 ## Test
 ```sh
