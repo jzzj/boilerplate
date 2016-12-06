@@ -11,3 +11,8 @@ const ul = $('<ul></ul>').appendTo('body');
 for (const cat of cats) {
 	$('<li></li>').text(cat).appendTo(ul);
 }
+
+require.ensure('../error/index', function(a){
+	var error = require('../error/index');
+	console.log(error);
+});

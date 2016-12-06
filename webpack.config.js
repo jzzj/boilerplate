@@ -91,8 +91,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, publicPath),
     filename: '[name].js',
-    chunkFilename: "[name].chunk.js",
-    publicPath: publicPath
+    chunkFilename: "chunk-[id]/[chunkhash:8].chunk.js",
+    // make sure that publicPath end up with /
+    publicPath: (publicPath+"/").replace(/\/\/$/, '/')
   },
   module: {
     loaders: [
