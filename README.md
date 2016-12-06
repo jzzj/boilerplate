@@ -53,7 +53,7 @@ npm run prod:lib
 ```
 build third-party library files in production env.  
 
-Actually, when your run ```sh npm run dev/prod```, it will run ```sh npm run dev/prod:lib``` automatically. You really run those two commands above rarely. And, by the way, if your change the vendor file, it won't automatically applied. Yes, it is a bug/feature, i will support it in next generation!
+Actually, when your run ```npm run dev/prod```, it will run ```npm run dev/prod:lib``` automatically. You really run those two commands above rarely. And, by the way, if your change the vendor file, it won't automatically applied. Yes, it is a bug/feature, i will support it in next generation!
 
 ## Resource-dump-service/plugin
 https://github.com/jzzj/res-dump-plugin
@@ -81,6 +81,35 @@ body{
 ```
 You can require assets not just in js file now!  
 Just enjoy!
+
+## Config
+```js
+{
+	port: 3000,
+	// all path args must be indicated.
+	path: {
+		client: path.join(__dirname, "/../client"),
+		"static": path.join(__dirname, "/../static"),
+		page: path.join(__dirname, "/../client/page"),
+		template: path.join(__dirname, "/../client/template"),
+		publicPath: "/static/page",
+		staticServerPath: "/static"
+	},
+	alias: {
+		"@client": path.join(__dirname, "/../client"),
+		"@lib": path.join(__dirname, "/../lib")
+	},
+	// options: git, md5. recommand git, faster. Git will use your git commit hash. Md5 will calculate your file's md5 value.
+	versionMode: "git"
+}
+```
+There two kind of config within different NODE_ENV: development.js & production.js. [config](https://github.com/typesafehub/config)  
+### cdn
+In some cases, you may want to upload all your resources to cdn server. Then indicates cdn field in production.js(i can't figure out why you would use cdn in development!) like this:
+```js
+cdn: "http://cdn.example.com/some/path",
+```
+It still would take care all resources and hash stuff to your static folder, in addition, use cdn as prefix to your reference! 
 
 ## Test
 ```sh
