@@ -103,7 +103,7 @@ Just enjoy!
 	versionMode: "git"
 }
 ```
-There two kind of config within different NODE_ENV: development.js & production.js. [config](https://github.com/typesafehub/config)  
+There two kind of config within different NODE_ENV: development.js & production.js. [config](https://github.com/lorenwest/node-config)  
 ### cdn
 In some cases, you may want to upload all your resources to cdn server. Then indicates cdn field in production.js(i can't figure out why you would use cdn in development!) like this:
 ```js

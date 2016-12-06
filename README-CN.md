@@ -100,7 +100,7 @@ body{
 	versionMode: "git"
 }
 ```
-两种环境的配置: development.js & production.js. [config](https://github.com/typesafehub/config)  
+两种环境的配置: development.js & production.js. [config](https://github.com/lorenwest/node-config)  
 ### cdn
 有时候你会想把所有的静态资源商城到cdn上来加速你网站的访问速度，可以在production.js（我想不到你为什么会在development环境中使用cdn的原因）中指定cdn字段 像这样:
 ```js
