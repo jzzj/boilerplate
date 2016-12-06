@@ -79,6 +79,35 @@ body{
 你不仅仅可以require资源js中，也可以在任何地方了!  
 享受一下吧!
 
+## Config
+```js
+{
+	port: 3000,
+	// 以下所有path的参数必须要明确声明
+	path: {
+		client: path.join(__dirname, "/../client"),
+		"static": path.join(__dirname, "/../static"),
+		page: path.join(__dirname, "/../client/page"),
+		template: path.join(__dirname, "/../client/template"),
+		publicPath: "/static/page",
+		staticServerPath: "/static"
+	},
+	alias: {
+		"@client": path.join(__dirname, "/../client"),
+		"@lib": path.join(__dirname, "/../lib")
+	},
+	// 可选：git、md5.推荐使用git模式，因为相对来说更快，git会使用你的git commit hash值（所以建议每次build在commit之后），md5的方式会计算文件的md5值
+	versionMode: "git"
+}
+```
+两种环境的配置: development.js & production.js. [config](https://github.com/typesafehub/config)  
+### cdn
+有时候你会想把所有的静态资源商城到cdn上来加速你网站的访问速度，可以在production.js（我想不到你为什么会在development环境中使用cdn的原因）中指定cdn字段 像这样:
+```js
+cdn: "http://cdn.example.com/some/path",
+```
+它会做所有的资源和加hash值的工作然后输出到你的static目录中，跟平常没有区别。除此之外还会使用你配置中的cdn作为你引用资源的前缀! 
+
 ## Test
 ```sh
 npm run test
