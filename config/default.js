@@ -9,7 +9,14 @@ module.exports = {
 		page: path.join(__dirname, "/../client/page"),
 		template: path.join(__dirname, "/../client/template"),
 		publicPath: "/static/page",
-		staticServerPath: "/static"
+		staticServerPath: "/static",
+
+
+		//path that above used for client, below is for server
+		controller: path.join(__dirname, "/../server/controller"),
+		servicePath: path.join(__dirname, "/../server/service"),
+		interceptorPath: path.join(__dirname, "/../server/interceptor"),
+		middlewarePath: path.join(__dirname, "/../server/middleware")
 	},
 	alias: {
 		"@client": path.join(__dirname, "/../client"),
