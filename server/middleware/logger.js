@@ -1,7 +1,12 @@
-export default async function logger(next){
+async function logger(){
 	
-	console.log(next, next.toString(), 333);
-	await next();
-	console.log(33322)
+	await new Promise(r=>{
+		setTimeout(function(){
+			console.log('some log');
+			r();
+		}, 1000);
+	});
 	//return next();
 }
+
+export default logger;

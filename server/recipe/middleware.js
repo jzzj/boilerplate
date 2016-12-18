@@ -1,4 +1,4 @@
-import compose_es7 from 'composition';
+import compose from 'koa-compose';
 import { getNormalFiles, watch } from '@lib/util';
 import config from 'config';
 
@@ -6,13 +6,18 @@ let middlewares;
 function getMiddlewares(servicePath){
      var s= getNormalFiles(servicePath)
         .map((file)=>{
-            return require(file).default;
+            var Middleware = require(file);
             Middleware = Middleware['default'] || Middleware;
             if (!Middleware) return;
-            return Middleware;
+            return middleware(Middleware);
         }).filter(Boolean);
-        console.log(s);
-        return compose_es7(s);
+        return compose(s);
+
+    function middleware(func){
+        return function*(){
+            return yield func.call(this);
+        }
+    }
 }
 
 export default ({path})=>{
@@ -20,8 +25,8 @@ export default ({path})=>{
     return function(app){
         app.use(function *(next){
             try{
-                console.log(middlewares, "0000");
-                yield middlewares.call(this, next);
+                yield middlewares.call(this);
+                yield next;
             }catch(e){
                 console.error(e.stack);
                 this.status = 500;
