@@ -1,7 +1,7 @@
 # boilerplate
 Boilerplate for front-end project only use webpack.
 
-## What this for?
+## Motivation
 It is aim to make a common front-end project boilerplate. Everyone could just fetch it and start working right away without caring about building stuff.
 
 ## Directories structure
@@ -110,6 +110,37 @@ In some cases, you may want to upload all your resources to cdn server. Then ind
 cdn: "http://cdn.example.com/some/path",
 ```
 It still would take care all resources and hash stuff to your static folder, in addition, use cdn as prefix to your reference! 
+
+## Server
+Yes, i had finished server support on boilerplate.  
+I use koa as a server framework, and take care of router define, middleware, interceptors, and server.  
+
+### Examples
+```js
+// controller
+export default {
+	url: "/test",
+	method: "get",
+	middleware: [],
+	handler: async function(response){	// yes, response is registered from service, you can use it directly, the param will injected automatically
+		this.body = "test content";
+	}
+};
+
+// interceptor
+export default {
+	test: url=>true, // => intercept all requests
+	handler: function(){	// => handle is a normal function, not generator function, only support synchronize call.
+		this.set('Cache-Control', 'no-cache');
+	}
+}
+
+// service
+export default function(){
+	// ...
+}	// service would inject as controller arguments.
+```
+Uh, you maybe dont want to use koa, in such cases, you could use a proxy to redirect request to your own server.
 
 ## Test
 ```sh
