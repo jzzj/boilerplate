@@ -8,6 +8,7 @@ import service from './recipe/service';
 import router from './recipe/router';
 import interceptor from './recipe/interceptor';
 import middleware from './recipe/middleware';
+import devserver from '@root/devserver';
 
 const controllerPath = config.path.controller;
 const servicePath = config.path.servicePath;
@@ -41,6 +42,10 @@ function inject(){
         path: middlewarePath
     })(app);
 
+    if(config.isDebug){
+        devserver(app, config.proxy);
+    }
+
     router({
         path: controllerPath
     })(app);
@@ -48,4 +53,5 @@ function inject(){
 
 inject();
 
-app.listen(3001);
+app.listen(config.port);
+console.log("=========== Server is listening on "+config.port+" ==========");

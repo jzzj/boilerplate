@@ -20,7 +20,8 @@ module.exports = {
 	},
 	alias: {
 		"@client": path.join(__dirname, "/../client"),
-		"@lib": path.join(__dirname, "/../lib")
+		"@lib": path.join(__dirname, "/../lib"),
+		"@root": path.join(__dirname, "/..")
 	},
 	// options: git, md5. recommand git, faster. Git will use your git commit hash. Md5 will calculate your file's md5 value.
 	versionMode: "git"

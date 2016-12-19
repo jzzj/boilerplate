@@ -1,10 +1,10 @@
 export default [{
-	url: "/",
+	url: "/welcome",
 	method: "get",
 	middleware: [],
 	handler: async function(){
 		console.log(333);
-		this.body = "welcome to home";
+		this.body = "welcome to boilerplate";
 	}
 }, {
 	url: "/long",

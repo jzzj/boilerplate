@@ -4,18 +4,20 @@ import config from 'config';
 
 let middlewares;
 function getMiddlewares(servicePath){
-     var s= getNormalFiles(servicePath)
+     var ret = getNormalFiles(servicePath)
         .map((file)=>{
             var Middleware = require(file);
             Middleware = Middleware['default'] || Middleware;
             if (!Middleware) return;
-            return middleware(Middleware);
+            return wrap(Middleware);
         }).filter(Boolean);
-        return compose(s);
+    return compose(ret);
 
-    function middleware(func){
-        return function*(){
-            return yield func.call(this);
+    // because can't yield *asyncFunction, so i wrap async function to generator function. 
+    function wrap(func){
+        return function*(next){
+            yield func.call(this);
+            yield next;
         }
     }
 }

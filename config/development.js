@@ -1,4 +1,7 @@
 module.exports = {
 	isDebug: true,
-	isOnline: false
+	isOnline: false,
+	proxy: {
+		"/api": "http://example.com/api"
+	}
 }
