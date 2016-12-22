@@ -156,7 +156,7 @@ module.exports = function(app, proxy){
     /*
     *  if you want to proxy some requests
     *  there some options for you: https://github.com/popomore/koa-proxy, https://github.com/KualiCo/koa-pixie-proxy
-    *  here, i left blank to you
+    *  here, I left blank to you
     */
     // koa generator function
     app.use(doMiddleware(hotMiddleware));
