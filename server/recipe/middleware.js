@@ -11,6 +11,7 @@ function getMiddlewares(servicePath){
             if (!Middleware) return;
             return wrap(Middleware);
         }).filter(Boolean);
+    ret.unshift(require("koa-body")());
     return compose(ret);
 
     // because can't yield *asyncFunction, so i wrap async function to generator function. 

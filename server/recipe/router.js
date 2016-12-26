@@ -46,10 +46,10 @@ export default ({path})=>{
             try{
                 yield routes.call(this, next);
             }catch(e){
-                console.error(e.stack);
+                e && console.error(e && e.stack);
                 this.status = 500;
                 this.error = e;
-                if(config.isDebug){
+                if(config.isDebug && e){
                     this.body = e.stack;
                 }else{
                     yield next;
