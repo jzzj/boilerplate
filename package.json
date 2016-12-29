@@ -1,6 +1,6 @@
 {
   "name": "boilerplate",
-  "version": "0.3.0-rc2",
+  "version": "0.3.0",
   "description": "Boilerplate for front-end project only use webpack.",
   "main": "index.js",
   "repository": {
