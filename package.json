@@ -17,7 +17,7 @@
     "prod:lib": "NODE_ENV=production node vendor.webpack.js",
     "clean": "echo \"We're assuming you're using static/ folder to store all builded files, otherwise, you may need to change this command!\" && rm -rf static/ && rm -f _babelcache.json"
   },
-  "author": "",
+  "author": "zangzhan@weanimals.net",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.18.2",
