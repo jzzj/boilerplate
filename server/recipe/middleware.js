@@ -17,8 +17,7 @@ function getMiddlewares(servicePath){
     // because can't yield *asyncFunction, so i wrap async function to generator function. 
     function wrap(func){
         return function*(next){
-            yield func.call(this);
-            yield next;
+            yield func.call(this, next);
         }
     }
 }

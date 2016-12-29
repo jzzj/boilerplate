@@ -8,7 +8,8 @@
     "url": "git+https://github.com/jzzj/boilerplate.git"
   },
   "scripts": {
-    "test": "npm run prod && (python -m SimpleHTTPServer 8666 &) && python -mwebbrowser http://localhost:8666/static/template/index.html",
+    "start": "./node_modules/.bin/pm2 startOrGracefulReload pm2.json",
+    "test": "npm run prod && npm run start && echo will start browser automatically if you had python installed && python -mwebbrowser http://localhost:3000",
     "build": "npm run clean && NODE_ENV=development webpack",
     "dev": "npm run dev:lib && ./bin/dev && npm run clean && NODE_ENV=development node index.js",
     "prod": "npm run prod:lib && npm run clean && NODE_ENV=production webpack",
