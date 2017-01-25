@@ -23,7 +23,9 @@ function getRoutes(controllerPath){
                 const url = route.url || fallbackUrl;
                 const methods = [].concat(route.method || route.methods || "get").map(x => x.toLowerCase());
                 const handlers = [].concat(route.middleware).concat(function * handle(next){
-
+                    if(typeof route.handler !== 'function'){
+                        throw new Error('route.handler is required!');
+                    }
                     if(this.$injector){
                         yield this.$injector.invoke(route.handler, this);
                     }else{
