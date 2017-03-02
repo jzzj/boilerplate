@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-	port: 3000,
+	port: 9000,
 	// all path args must be indicated.
 	path: {
 		client: path.join(__dirname, "/../client"),
