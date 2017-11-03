@@ -72,7 +72,6 @@ var resDumpMiddleware = resDumpService({
 });
 
 function doMiddleware(middleware){
-    console.log(22);
     return function *(next){
         wrap.call(this, this.req, this.res)
         const req = this.req;
