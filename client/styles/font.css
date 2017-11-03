@@ -1,5 +1,5 @@
 body{
 	font-size: 16px;
-	background: url(${require('@client/img/cat2.jpg')}) no-repeat;
+	
 }
 @import './test.css';

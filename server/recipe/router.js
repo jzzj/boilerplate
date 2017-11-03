@@ -1,4 +1,4 @@
-import compose from 'koa-compose';
+import compose from 'composition';
 import Router from 'koa-router';
 import { getNormalFiles, watch } from '@lib/util';
 import path from 'path';
@@ -65,19 +65,7 @@ export default ({path})=>{
     routes = getRoutes(path);
     return function(app){
         app.use(function *(next){
-            try{
-                yield routes.call(this, next);
-            }catch(e){
-                e && console.error(e && e.stack);
-                this.status = 500;
-                this.error = e;
-                if(config.isDebug && e){
-                    this.body = e.stack;
-                }else{
-                    //yield next;
-                    throw e;
-                }
-            }
+            yield routes.call(this, next);
         });
 
         watch({

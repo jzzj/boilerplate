@@ -53,4 +53,4 @@ function register(){
 register();
 
 app.listen(config.port);
-console.log("=========== Server is listening on "+config.port+" ==========");
+console.log("=========== Server is listening on "+config.port+" ==========\n");

@@ -5,7 +5,10 @@ var moment = require('moment');
 export default async function (next){
   const start = +new Date();
   await next;
-
+  const passReq = /\.(?:js|map|css|png|gif|jpg|jpeg|svg|icon|iconfont|font)|__webpack_|__res-dump-service/.test(this.request.href);
+  if(passReq) {
+    return;
+  }
   const length = this.length ? this.length.toString() : '-';
   const date = moment().format('YYYY/MM/D HH:mm:ss ZZ');
   const realIp = this.header["x-forwarded-for"] || this.header["x-real-ip"] || this.ip;

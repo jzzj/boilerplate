@@ -1,4 +1,4 @@
-var compose = require('koa-compose');
+var compose = require('composition');
 var webpack = require("webpack");
 var config = require("config");
 var resDumpService = require('res-dump-service');
@@ -72,12 +72,12 @@ var resDumpMiddleware = resDumpService({
 });
 
 function doMiddleware(middleware){
+    console.log(22);
     return function *(next){
         wrap.call(this, this.req, this.res)
         const req = this.req;
         const res = this.res;
         yield action.call(this);
-
         function *action(){
             var nextCalled = false;
             yield new Promise(function(resolve, reject){
@@ -156,9 +156,9 @@ module.exports = function(app, proxy){
     */
     // koa generator function
 
-    app.use(doMiddleware(hotMiddleware));
-
     app.use(doMiddleware(devMiddleware));
+
+    app.use(doMiddleware(hotMiddleware));
 
     app.use(doMiddleware(resDumpMiddleware));
 }

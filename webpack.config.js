@@ -109,5 +109,5 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: alias
   },
-  devtool: isOnline ? null :'cheap-module-source-map'
+  //devtool: isOnline ? null :'cheap-module-source-map'
 }
