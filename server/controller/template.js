@@ -7,12 +7,12 @@ let routes = [];
 if(fs.existsSync(staticPath)){
     const templatePath = config.path.template.replace(config.path.client, staticPath);
     glob
-        .sync(templatePath + "/**/*.html")
+        .sync(templatePath + "/**/*.+(html|jsx)")
         .forEach(function (f) {
             const url = f.replace(templatePath, "");
             routes.push(routeShape(url, f));
-            if(/index\.html$/.test(f)){
-                routes.push(routeShape(url.replace("index.html", ""), f));
+            if(/index\.(?:html|jsx)$/.test(f)){
+                routes.push(routeShape(url.replace(/index\.(?:html|jsx)/, ""), f));
             }
             function routeShape(url, f){
                 return {

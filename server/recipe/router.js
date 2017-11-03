@@ -5,6 +5,7 @@ import path from 'path';
 import config from 'config';
 
 let routes;
+let templateMap = {};
 function getRoutes(controllerPath){
     const router = Router();
     var files = getNormalFiles(controllerPath)
@@ -22,8 +23,18 @@ function getRoutes(controllerPath){
             controller.map(route=>{
                 const url = route.url || fallbackUrl;
                 const methods = [].concat(route.method || route.methods || "get").map(x => x.toLowerCase());
-                const handlers = [].concat(route.middleware).concat(function * handle(next){
+                if(route.template) {
+                    getTemplate(route.template);
+                }
 
+                const handlers = [].concat(route.middleware || []).concat(function * handle(next){
+                    if(config.isDebug) {
+                        getTemplate(route.template);
+                    }
+                    if(route.template) {
+                        this.templateName = route.template;
+                        this.template = templateMap[route.template];
+                    }
                     if(this.$injector){
                         yield this.$injector.invoke(route.handler, this);
                     }else{
@@ -39,6 +50,17 @@ function getRoutes(controllerPath){
     return router.routes();
 }
 
+function getTemplate(templateName) {
+    let templatePath;
+    if(!config.isOnline) {
+        templatePath = config.path.template;
+    } else {
+        templatePath = config.path.template.replace(config.path.client, config.path['static']);
+    }
+    const fileTransform = require('res-dump-service').fileTransform;
+    templateMap[templateName] = fileTransform(path.join(templatePath, templateName + '.html'));  // hardcode
+}
+
 export default ({path})=>{
     routes = getRoutes(path);
     return function(app){
@@ -52,7 +74,8 @@ export default ({path})=>{
                 if(config.isDebug && e){
                     this.body = e.stack;
                 }else{
-                    yield next;
+                    //yield next;
+                    throw e;
                 }
             }
         });

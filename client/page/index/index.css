@@ -1,3 +1,6 @@
+@import '@client/styles/test.css';
+
+@import '@client/styles/font.css';
 
 body {
 	display: block;

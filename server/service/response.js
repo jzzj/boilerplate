@@ -1,5 +1,7 @@
 import fs from 'fs';
-import {extname} from 'path';
+import path, {extname} from 'path';
+import config from 'config';
+import ReactServer from 'react-dom/server';
 
 export default class Response{
 	constructor(context){
@@ -34,7 +36,13 @@ export default class Response{
         ctx.body = fs.createReadStream(filepath);
 	}
 
-	render(){
-		
+	render(data){
+        this.context.status = 200;
+        this.context.type = 'text/html';
+        this.context.body = templateEngine(this.context.template, `window.$globalState = ${JSON.stringify(data)}`);
 	}
+}
+
+function templateEngine(template, data) {
+    return template.replace(/\{\s*\{\s*placeholder\s*\}\s*\}/, data);
 }

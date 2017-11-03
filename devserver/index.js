@@ -1,3 +1,4 @@
+var compose = require('koa-compose');
 var webpack = require("webpack");
 var config = require("config");
 var resDumpService = require('res-dump-service');
@@ -67,7 +68,7 @@ var devMiddleware = webpackMiddleware(compiler, {
 var resDumpMiddleware = resDumpService({
     webpackConfig: webpackConfig,
     commonFileName: "common",
-    makeShortcut: true
+    makeShortcut: false
 });
 
 function doMiddleware(middleware){
@@ -81,23 +82,18 @@ function doMiddleware(middleware){
             var nextCalled = false;
             yield new Promise(function(resolve, reject){
                 var result = middleware(req, res, function(){
-                    nextCalled = true;
                     onFulliflled();
                 });
                 if(result && typeof result.then === 'function'){
                     result.then(onFulliflled);
-                }else{
-                    onFulliflled();
                 }
-                var called = false;
                 function onFulliflled(){
-                    if(!called){
-                        resolve();
-                    }
+                    nextCalled = true
+                    resolve();
                 }
             });
-            
             if(nextCalled){
+
                 yield next;
             }
         }
@@ -159,6 +155,7 @@ module.exports = function(app, proxy){
     *  here, I left blank to you
     */
     // koa generator function
+
     app.use(doMiddleware(hotMiddleware));
 
     app.use(doMiddleware(devMiddleware));

@@ -26,9 +26,9 @@ app.use(function * (next){
     this.$injector = null;
 });
 
-// inject service, router, middleware
+// register service, router, middleware
 // order does matter.
-function inject(){
+function register(){
     interceptor({
         path: interceptorPath
     })(app);
@@ -50,7 +50,7 @@ function inject(){
     })(app);
 }
 
-inject();
+register();
 
 app.listen(config.port);
 console.log("=========== Server is listening on "+config.port+" ==========");

@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/pm2 startOrGracefulReload pm2.json",
+    "stop": "./node_modules/.bin/pm2 stop pm2.json",
     "test": "npm run prod && npm run start && echo will start browser automatically if you had python installed && python -mwebbrowser http://localhost:3000",
     "build": "npm run clean && NODE_ENV=development webpack",
     "dev": "npm run dev:lib && ./bin/dev && npm run clean && NODE_ENV=development node index.js",
@@ -72,6 +73,7 @@
     "koa": "^1.2.4",
     "koa-body": "^1.6.0",
     "koa-router": "^5.4.0",
+    "moment": "^2.19.1",
     "pm2": "^2.2.3",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
