@@ -8,7 +8,7 @@
     "url": "git+https://github.com/jzzj/boilerplate.git"
   },
   "scripts": {
-    "start": "./node_modules/.bin/pm2 startOrGracefulReload pm2.json",
+    "start": "npm run prod && ./node_modules/.bin/pm2 startOrGracefulReload pm2.json",
     "stop": "./node_modules/.bin/pm2 stop pm2.json",
     "test": "npm run prod && npm run start && echo will start browser automatically if you had python installed && python -mwebbrowser http://localhost:3000",
     "build": "npm run clean && NODE_ENV=development webpack",
